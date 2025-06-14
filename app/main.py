@@ -21,11 +21,12 @@ async def main() -> None:
     speaker = SmartSpeakerDevice()
     toilet = SmartToiletDevice()
     devices = [hue_light, speaker, toilet]
+
     tasks = [
-        asyncio.gather(service.register_device(device))
+        service.register_device(device)
         for device in devices
     ]
-    [[hue_light_id], [speaker_id], [toilet_id]] = await asyncio.gather(*tasks)
+    [hue_light_id, speaker_id, toilet_id] = await asyncio.gather(*tasks)
 
     await run_sequence(
         run_parallel(
